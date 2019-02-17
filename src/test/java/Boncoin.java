@@ -7,17 +7,21 @@ import java.io.IOException;
 public class Boncoin extends TestCase {
     @BeforeEach
     void open() {
-        this.webdriver.get("http://google.com");
+        try {
+            this.webdriver.get(Config.getInstance().get("boncoin_url"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
     void title() {
-        assertTrue(this.webdriver.getTitle().contains("Google"));
+        assertTrue(this.webdriver.getTitle().contains("leboncoin"));
     }
 
     @Test
     void search() {
-        assertTrue(this.webdriver.getTitle().contains("Facebook"));
+        assertFalse(this.webdriver.getTitle().contains("Facebook"));
     }
 
     @AfterEach

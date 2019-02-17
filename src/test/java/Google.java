@@ -2,13 +2,19 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class Google extends TestCase {
 
     @BeforeEach
     void open() {
-        this.webdriver.get("http://google.com");
+        try {
+            this.webdriver.get(Config.getInstance().get("google_url"));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     @Test
