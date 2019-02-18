@@ -22,6 +22,7 @@ public class TestCase {
             e.printStackTrace();
         }
         this.webdriver = new ChromeDriver();
+        this.webdriver.manage().window().maximize();
     }
     public boolean isAlertPresent() {
         try {
@@ -53,8 +54,7 @@ public class TestCase {
             throw new RuntimeException(e);
         }
     }
-    protected void mouseover(final By by) {
-        final WebElement element = this.webdriver.findElement(by);
+    protected void mouseover(WebElement element) {
         final Actions builder = new Actions(this.webdriver);
         final Action mouseover = builder.moveToElement(element).build();
         mouseover.perform();
