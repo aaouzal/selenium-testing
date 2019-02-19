@@ -26,12 +26,12 @@ public class Google extends TestCase {
         webdriver.findElement(By.cssSelector("div.a4bIc > input")).submit();
         assertTrue(this.webdriver.getTitle().contains("Google"));
         assertTrue(this.webdriver.findElement(By.cssSelector("#search > div")).getText().contains("selenium"));
-        assertTrue(this.webdriver.findElement(By.xpath("//*[@id=\"resultStats\"]")).getText().matches("^Environ.*résultats.*"));
+        System.out.println(webdriver.findElement(By.xpath("//*[@id=\"resultStats\"]")).getText());
+        assertTrue(this.webdriver.findElement(By.xpath("//*[@id=\"resultStats\"]")).getText().matches("^Environ(\\W|\\d)*résultats.*"));
 
 
 
     }
-
     @AfterEach
     void close() {
         this.webdriver.close();
