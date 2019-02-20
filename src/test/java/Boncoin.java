@@ -1,10 +1,8 @@
 import static org.junit.jupiter.api.Assertions.*;
 import static org.junit.jupiter.api.Assertions.assertTrue;
-
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.support.ui.Select;
 
 import java.io.IOException;
 import java.util.List;
@@ -15,6 +13,8 @@ public class Boncoin extends TestCase {
     void open() {
         try {
             this.webdriver.get(Config.getInstance().get("boncoin_url"));
+            assertTrue(fillElement ("click","cssSelector", "g[data-reactid=\'208\']",""));
+            sleep(4000);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -25,19 +25,21 @@ public class Boncoin extends TestCase {
     void test_with_moto() {
         assertTrue(webdriver.getTitle().matches(".*leboncoin.*"));
         //fill search criteria
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).sendKeys("Moto");
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).submit();
-        new Select(webdriver.findElement(By.cssSelector("div._2gTTZ > select"))).selectByValue("3");
-        new Select(webdriver.findElement(By.id("searcharea"))).selectByValue("6");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(1) > div > div > div:nth-child(2) > select"))).selectByValue("500");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(2) > div > div > div:nth-child(2) > select"))).selectByValue("2013");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(3) > div > div > div:nth-child(4) > select"))).selectByValue("30000");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(4) > div > div > div:nth-child(4) > select"))).selectByValue("125");
+        assertTrue(fillElement ("Input","cssSelector", "div.bVqYZ > input","Moto"));
+        assertTrue(fillElement ("submit","cssSelector","div.bVqYZ > input",""));
+        assertTrue(fillElement ("Select","cssSelector","div._2gTTZ > select","3"));
+        assertTrue(fillElement ("Select","id","searcharea","6"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(1) > div > div > div:nth-child(2) > select","500"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(2) > div > div > div:nth-child(2) > select","2013"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(3) > div > div > div:nth-child(4) > select","30000"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(4) > div > div > div:nth-child(4) > select","125"));
         //submit criteria
-        webdriver.findElement(By.cssSelector("div._2bh4L.trackable > button")).click();
+        assertTrue(fillElement ("click","cssSelector","div._2bh4L.trackable > button",""));
         //sorting results
         assertTrue(webdriver.findElement(By.cssSelector("div.l17WS.bgMain > div > div._36eyL")).getText().matches(".*Moto.*"));
-        new Select(webdriver.findElement(By.cssSelector("div._1uEY7 > div.selectWrapper > select"))).selectByValue("price-asc");
+        assertTrue(fillElement ("Select","cssSelector","div._1uEY7 > div.selectWrapper > select","price-asc"));
+        //Screenshot
+        takeScreenshot(Screenshot);
         //scan results
         List<WebElement> allPages = webdriver.findElements(By.cssSelector("nav > div > ul > li"));
         assertFalse(allPages.isEmpty());
@@ -45,20 +47,9 @@ public class Boncoin extends TestCase {
             if (!element.equals(allPages.get(allPages.size()-1))) {
                 if ((element.getText()).isEmpty()) {
                 } else {
-                    System.out.println(element.getText());
-                    //assertFalse(element.getText().contains("oto"));
-
                     List<WebElement> allElements = webdriver.findElements(By.xpath("//*[@id=\"container\"]/main/div/div/div[3]/div/div[6]/div[1]/div/div[1]/div[2]/ul/li"));
-
                     for (WebElement element2: allElements) {
-                        if(!element2.getText().isEmpty()) {
-                            System.out.println(element2.getText());
-                            assertTrue(element2.getText().contains("Moto"));
-                            assertTrue(element2.getAttribute("class").matches(".*3DFQ.*"));
-                            assertTrue(element2.getAttribute("itemtype").matches("^http://schema.*"));
-                            assertTrue(element2.getAttribute("data-qa-id").matches(".*aditem_container.*"));
-                            this.mouseover(element2);
-                        }
+                        assertTrue(check_element(element2));
                     }
                     element.click();
                 }
@@ -72,19 +63,21 @@ public class Boncoin extends TestCase {
     void test_with_location() {
         assertTrue(webdriver.getTitle().matches(".*leboncoin.*"));
         //fill search criteria
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).sendKeys("studio");
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).submit();
-        new Select(webdriver.findElement(By.cssSelector("div._2gTTZ > select"))).selectByValue("10");
-        new Select(webdriver.findElement(By.id("searcharea"))).selectByValue("6");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(1) > div > div > div:nth-child(2) > select"))).selectByValue("500");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(1) > div > div > div:nth-child(4) > select"))).selectByValue("750");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(2) > div > div > div:nth-child(2) > select"))).selectByValue("40");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(3) > div > div > div:nth-child(4) > select"))).selectByValue("7");
+        assertTrue(fillElement ("Input","cssSelector", "div.bVqYZ > input","studio"));
+        assertTrue(fillElement ("submit","cssSelector","div.bVqYZ > input",""));
+        assertTrue(fillElement ("Select","cssSelector","div._2gTTZ > select","10"));
+        assertTrue(fillElement ("Select","id","searcharea","6"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(1) > div > div > div:nth-child(2) > select","500"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(1) > div > div > div:nth-child(4) > select","750"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(2) > div > div > div:nth-child(2) > select","40"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(3) > div > div > div:nth-child(4) > select","7"));
         //submit criteria
-        webdriver.findElement(By.cssSelector("div._2bh4L.trackable > button")).click();
+        assertTrue(fillElement ("click","cssSelector","div._2bh4L.trackable > button",""));
         //sorting results
         assertTrue(webdriver.findElement(By.cssSelector("div.l17WS.bgMain > div > div._36eyL")).getText().matches(".*Locations.*"));
-        new Select(webdriver.findElement(By.cssSelector("div._1uEY7 > div.selectWrapper > select"))).selectByValue("price-asc");
+        assertTrue(fillElement ("Select","cssSelector","div._1uEY7 > div.selectWrapper > select","price-asc"));
+        //Screenshot
+        takeScreenshot(Screenshot);
         //scan results
         List<WebElement> allPages = webdriver.findElements(By.cssSelector("nav > div > ul > li"));
         assertTrue(allPages.isEmpty());
@@ -98,13 +91,7 @@ public class Boncoin extends TestCase {
                     List<WebElement> allElements = webdriver.findElements(By.xpath("//*[@id=\"container\"]/main/div/div/div[3]/div/div[6]/div[1]/div/div[1]/div[2]/ul/li"));
 
                     for (WebElement element2: allElements) {
-                        if(!element2.getText().isEmpty()) {
-                            assertTrue(element2.getText().matches(".*studio.*"));
-                            assertTrue(element2.getAttribute("class").matches("_3DFQ-"));
-                            assertTrue(element2.getAttribute("itemtype").matches("http://schema.*"));
-                            assertTrue(element2.getAttribute("data-qa-id").matches("aditem_container"));
-                            this.mouseover(element2);
-                        }
+                        assertTrue(check_element(element2));
                     }
                     element.click();
                 }
@@ -118,39 +105,23 @@ public class Boncoin extends TestCase {
     void test_with_evenements() {
         assertTrue(webdriver.getTitle().matches(".*leboncoin.*"));
         //fill search criteria
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).sendKeys("mariage");
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).submit();
-        new Select(webdriver.findElement(By.cssSelector("div._2gTTZ > select"))).selectByValue("49");
-        new Select(webdriver.findElement(By.id("searcharea"))).selectByValue("6");
+        assertTrue(fillElement ("Input","cssSelector", "div.bVqYZ > input","mariage"));
+        assertTrue(fillElement ("submit","cssSelector","div.bVqYZ > input",""));
+        assertTrue(fillElement ("Select","cssSelector","div._2gTTZ > select","49"));
+        assertTrue(fillElement ("Select","id","searcharea","6"));
+
         //submit criteria
-        webdriver.findElement(By.cssSelector("div._2bh4L.trackable > button")).click();
+        assertTrue(fillElement ("click","cssSelector","div._2bh4L.trackable > button",""));
         //sorting results
         assertTrue(webdriver.findElement(By.cssSelector("div.l17WS.bgMain > div > div._36eyL")).getText().matches(".*mariage.*"));
-        new Select(webdriver.findElement(By.cssSelector("div._1uEY7 > div.selectWrapper > select"))).selectByValue("price-asc");
-        //scan results
-        List<WebElement> allPages = webdriver.findElements(By.cssSelector("nav > div > ul > li"));
-        assertFalse(allPages.isEmpty());
-        for (WebElement element: allPages) {
-            if (!element.equals(allPages.get(allPages.size()-1))) {
-                if ((element.getText()).isEmpty()) {
-                } else {
-                    System.out.println(element.getText());
-                    //assertFalse(element.getText().contains("oto"));
-
-                    List<WebElement> allElements = webdriver.findElements(By.xpath("//*[@id=\"container\"]/main/div/div/div[3]/div/div[6]/div[1]/div/div[1]/div[2]/ul/li"));
-
-                    for (WebElement element2: allElements) {
-                        if(!element2.getText().isEmpty()) {
-                            //assertTrue(element2.getText().matches(".*nements.*"));
-                            assertTrue(element2.getAttribute("class").matches("_3DFQ-"));
-                            assertTrue(element2.getAttribute("itemtype").matches("http://schema.*"));
-                            assertTrue(element2.getAttribute("data-qa-id").matches("aditem_container"));
-                            this.mouseover(element2);
-                        }
-                    }
-                    element.click();
-                }
-            }
+        assertTrue(fillElement ("Select","cssSelector","div._1uEY7 > div.selectWrapper > select","price-asc"));
+        //Screenshot
+        takeScreenshot(Screenshot);
+        //scan results on the first page
+        List<WebElement> allElements = webdriver.findElements(By.xpath("//*[@id=\"container\"]/main/div/div/div[3]/div/div[6]/div[1]/div/div[1]/div[2]/ul/li"));
+        assertFalse(allElements.isEmpty());
+        for (WebElement element2: allElements) {
+            assertTrue(check_element(element2));
         }
 
         assertTrue(this.webdriver.getTitle().matches(".*leboncoin.*"));
@@ -161,17 +132,19 @@ public class Boncoin extends TestCase {
     void test_with_telephone() {
         assertTrue(webdriver.getTitle().matches(".*leboncoin.*"));
         //fill search criteria
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).sendKeys("samsung");
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).submit();
-        new Select(webdriver.findElement(By.cssSelector("div._2gTTZ > select"))).selectByValue("17");
-        new Select(webdriver.findElement(By.id("searcharea"))).selectByValue("6");
-        new Select(webdriver.findElement(By.cssSelector("section > div > div > div > div:nth-child(2) > select"))).selectByValue("50");
-        new Select(webdriver.findElement(By.cssSelector("section > div > div > div > div:nth-child(4) > select"))).selectByValue("300");
+        assertTrue(fillElement ("Input","cssSelector", "div.bVqYZ > input","samsung"));
+        assertTrue(fillElement ("submit","cssSelector","div.bVqYZ > input",""));
+        assertTrue(fillElement ("Select","cssSelector","div._2gTTZ > select","17"));
+        assertTrue(fillElement ("Select","id","searcharea","6"));
+        assertTrue(fillElement ("Select","cssSelector","section > div > div > div > div:nth-child(2) > select","50"));
+        assertTrue(fillElement ("Select","cssSelector","section > div > div > div > div:nth-child(4) > select","300"));
         //submit criteria
-        webdriver.findElement(By.cssSelector("div._2bh4L.trackable > button")).click();
+        assertTrue(fillElement ("click","cssSelector","div._2bh4L.trackable > button",""));
         //sorting results
         assertTrue(webdriver.findElement(By.cssSelector("div.l17WS.bgMain > div > div._36eyL")).getText().matches(".*samsung.*"));
-        new Select(webdriver.findElement(By.cssSelector("div._1uEY7 > div.selectWrapper > select"))).selectByValue("price-asc");
+        assertTrue(fillElement ("Select","cssSelector","div._1uEY7 > div.selectWrapper > select","price-asc"));
+        //Screenshot
+        takeScreenshot(Screenshot);
         //scan results
         List<WebElement> allPages = webdriver.findElements(By.cssSelector("nav > div > ul > li"));
         assertFalse(allPages.isEmpty());
@@ -185,12 +158,7 @@ public class Boncoin extends TestCase {
                     List<WebElement> allElements = webdriver.findElements(By.xpath("//*[@id=\"container\"]/main/div/div/div[3]/div/div[6]/div[1]/div/div[1]/div[2]/ul/li"));
 
                     for (WebElement element2: allElements) {
-                        if(!element2.getText().isEmpty()) {
-                            assertTrue(element2.getAttribute("class").matches("_3DFQ-"));
-                            assertTrue(element2.getAttribute("itemtype").matches("http://schema.*"));
-                            assertTrue(element2.getAttribute("data-qa-id").matches("aditem_container"));
-                            this.mouseover(element2);
-                        }
+                        assertTrue(check_element(element2));
                     }
                     element.click();
                 }
@@ -204,43 +172,25 @@ public class Boncoin extends TestCase {
     void test_with_campings() {
         assertTrue(webdriver.getTitle().matches(".*leboncoin.*"));
         //fill search criteria
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).sendKeys("mobil home");
-        webdriver.findElement(By.cssSelector("div.bVqYZ > input")).submit();
-        new Select(webdriver.findElement(By.cssSelector("div._2gTTZ > select"))).selectByValue("68");
-        new Select(webdriver.findElement(By.id("searcharea"))).selectByValue("6");
-        //new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(1) > div > div > div:nth-child(2) > select"))).selectByValue("50");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(1) > div > div > div:nth-child(4) > select"))).selectByValue("150");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(3) > div > div > div:nth-child(2) > select"))).selectByValue("1");
-        new Select(webdriver.findElement(By.cssSelector("section > div:nth-child(4) > div > div > div > select"))).selectByValue("1");
+        assertTrue(fillElement ("Input","cssSelector", "div.bVqYZ > input","mobil home"));
+        assertTrue(fillElement ("submit","cssSelector","div.bVqYZ > input",""));
+        assertTrue(fillElement ("Select","cssSelector","div._2gTTZ > select","68"));
+        assertTrue(fillElement ("Select","id","searcharea","6"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(1) > div > div > div:nth-child(4) > select","150"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(3) > div > div > div:nth-child(2) > select","1"));
+        assertTrue(fillElement ("Select","cssSelector","section > div:nth-child(4) > div > div > div > select","1"));
         //submit criteria
-        webdriver.findElement(By.cssSelector("div._2bh4L.trackable > button")).click();
+        assertTrue(fillElement ("click","cssSelector","div._2bh4L.trackable > button",""));
         //sorting results
         assertTrue(webdriver.findElement(By.cssSelector("div.l17WS.bgMain > div > div._36eyL")).getText().matches(".*Camping.*"));
-        new Select(webdriver.findElement(By.cssSelector("div._1uEY7 > div.selectWrapper > select"))).selectByValue("price-asc");
-        //scan results
-        List<WebElement> allPages = webdriver.findElements(By.cssSelector("nav > div > ul > li"));
-        assertTrue(allPages.isEmpty());
-        for (WebElement element: allPages) {
-            if (!element.equals(allPages.get(allPages.size()-1))) {
-                if ((element.getText()).isEmpty()) {
-                } else {
-                    System.out.println(element.getText());
-                    //assertFalse(element.getText().contains("oto"));
-
-                    List<WebElement> allElements = webdriver.findElements(By.xpath("//*[@id=\"container\"]/main/div/div/div[3]/div/div[6]/div[1]/div/div[1]/div[2]/ul/li"));
-
-                    for (WebElement element2: allElements) {
-                        if(!element2.getText().isEmpty()) {
-                            assertTrue(element2.getText().matches(".*campings.*"));
-                            assertTrue(element2.getAttribute("class").matches("_3DFQ-"));
-                            assertTrue(element2.getAttribute("itemtype").matches("http://schema.*"));
-                            assertTrue(element2.getAttribute("data-qa-id").matches("aditem_container"));
-                            this.mouseover(element2);
-                        }
-                    }
-                    element.click();
-                }
-            }
+        assertTrue(fillElement ("Select","cssSelector","div._1uEY7 > div.selectWrapper > select","price-asc"));
+        //Screenshot
+        takeScreenshot(Screenshot);
+        //scan results on the first page
+        List<WebElement> allElements = webdriver.findElements(By.xpath("//*[@id=\"container\"]/main/div/div/div[3]/div/div[6]/div[1]/div/div[1]/div[2]/ul/li"));
+        assertFalse(allElements.isEmpty());
+        for (WebElement element2: allElements) {
+            assertTrue(check_element(element2));
         }
 
         assertTrue(this.webdriver.getTitle().matches(".*leboncoin.*"));
@@ -251,4 +201,15 @@ public class Boncoin extends TestCase {
     void close() {
         this.webdriver.close();
     }
+
+    boolean check_element( WebElement element){
+        if(!element.getText().isEmpty()) {
+            assertTrue(element.getAttribute("class").matches(".*3DFQ.*"));
+            assertTrue(element.getAttribute("itemtype").matches("^http://schema.*"));
+            assertTrue(element.getAttribute("data-qa-id").matches(".*aditem_container.*"));
+            this.mouseover(element);
+        }
+        return true;
+    }
+
 }

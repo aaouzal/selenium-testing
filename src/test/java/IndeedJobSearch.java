@@ -33,13 +33,11 @@ public class IndeedJobSearch extends TestCase {
 		//webdriver.findElement(By.id("text-input-where")).sendKeys("Sophia Antipolis (06)");
 		// find findjobs button and click on it
 		webdriver.findElement(By.cssSelector("div.icl-WhatWhere-buttonWrapper > button")).submit();
+        //Screenshot
+        takeScreenshot(Screenshot);
 		// from  job search results page, get page title ad jobs count message
 		System.out.println(webdriver.getTitle());
 		System.out.println(webdriver.findElement(By.id("searchCount")).getText());
-
-
-		//webdriver.findElement(By.cssSelector("resultsCol > div.pagination > a:nth-child(6) > span > span")).click();
-		//#resultsCol > div.pagination > a:nth-child(9) > span > span
 		boolean First=true;
 		while(!webdriver.findElements(By.partialLinkText("Suivant")).isEmpty()){
 			//affichages des élements en cours
