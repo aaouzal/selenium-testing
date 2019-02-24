@@ -17,16 +17,16 @@ public class Google extends TestCase {
     }
 
     @Test
-    void search_key_word() {
+    void searchKeyword() {
         assertTrue(this.webdriver.getTitle().contains("Google"));
 
        // webdriver.findElement(By.cssSelector("div.a4bIc > input")).sendKeys("selenium");
-        assertTrue(fillElement ("Input","cssSelector", "div.a4bIc > input","selenium"));
-        assertTrue(fillElement ("submit","cssSelector", "div.a4bIc > input",""));
-        webdriver.findElement(By.cssSelector("div.a4bIc > input")).submit();
+        assertTrue(fillElement ("Input",By.cssSelector("div.a4bIc > input"),"selenium"));
+        assertTrue(fillElement ("submit",By.cssSelector("div.a4bIc > input"),""));
+        this.webdriver.findElement(By.cssSelector("div.a4bIc > input")).submit();
         assertTrue(this.webdriver.getTitle().contains("Google"));
         assertTrue(this.webdriver.findElement(By.cssSelector("#search > div")).getText().contains("selenium"));
-        System.out.println(webdriver.findElement(By.xpath("//*[@id=\"resultStats\"]")).getText());
+        System.out.println(this.webdriver.findElement(By.xpath("//*[@id=\"resultStats\"]")).getText());
         assertTrue(this.webdriver.findElement(By.xpath("//*[@id=\"resultStats\"]")).getText().matches("^Environ(\\W|\\d)*résultats.*"));
         //Screenshot
         takeScreenshot(Screenshot);
@@ -35,6 +35,6 @@ public class Google extends TestCase {
     }
     @AfterEach
     void close() {
-        this.webdriver.close();
+        this.webdriver.quit();
     }
 }
